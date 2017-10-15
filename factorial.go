@@ -4,6 +4,7 @@ import (
   "fmt"
   "math"
   "math/big"
+  "os"
 )
 func multiplica(fac []*big.Int) (*big.Int){
   mul := big.NewInt(1)
@@ -54,6 +55,10 @@ func main(){
   fmt.Scanln(&num)
   fmt.Println("Divide by: ")
   fmt.Scanln(&div)
+  if div == 1 || div == 0 {
+    fmt.Println("Not valid, div have to > 2")
+    os.Exit(0)
+  }
   for i=1; i<=num; i++ {
     factorial = append(factorial,i)
   }
