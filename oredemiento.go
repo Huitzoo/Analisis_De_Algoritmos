@@ -1,5 +1,5 @@
-/*Program that organize an array for the method of divide and conquer*/
 package main
+
 import (
   "fmt"
   "strings"
@@ -23,10 +23,12 @@ func ordenar(arreglo []int)[]int{
       }
     }
   }
+fmt.Println("ordena: ",arreglo)
   return arreglo
 }
-func divide(div int,arreglo []int) []int{
-  if len(arreglo) < int(div) {
+func divide(div float64,arreglo []int) []int{
+  fmt.Println("arreglo: ",arreglo)
+  if len(arreglo) < int(div) { //caso base
     return ordenar(arreglo)
   }
   var (
@@ -35,15 +37,16 @@ func divide(div int,arreglo []int) []int{
   )
   var lista = make([][]int,int(div))
   tam := float64(len(arreglo))
-  divi := float64(div)
-  mod := len(arreglo)%div
-  r = int(math.Floor(tam/divi))
-  lista[0] = divide(div,arreglo[0:r+mod])
-  for i,k,j=r+mod,1,1 ;j<div;j++{
-    lista[k] = divide(div,arreglo[i:i+r])
+  r = int(math.Ceil(tam/div))
+  fmt.Println(r)
+  for i,k,j=0,0,1 ;(r*j)-1 < len(arreglo);j++{
+    lista[k] = divide(div,arreglo[i:(r*j)])
     k++
     i=i+r
-    fmt.Println(lista)
+    fmt.Println("lista: ",lista)
+  }
+  if (i<len(arreglo)){
+    lista[k] = divide(div,arreglo[i:r*j-1])
   }
   for p := 0; p < int(div); p++ {
     for q := 0;  q< len(lista[p]); q++ {
@@ -65,7 +68,12 @@ var (
   for i:=0 ; i<tam ; i++{
     cadena = append(cadena,(random.Intn(100)*1))
   }
-  fmt.Println("Inicial: ",cadena)
-  res := divide(div,cadena)
-  fmt.Println("resultado: ",res)
+  fmt.Println("inici: ",cadena)
+  res := divide(float64(div),cadena)
+  fmt.Println(len(res))
+  for i := 0; i < len(res); i++ {
+    if res[i] != 0{
+      fmt.Print(" ",res[i])
+    }
+  }
 }
