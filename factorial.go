@@ -5,6 +5,7 @@ import (
   "math"
   "math/big"
   "os"
+  "time"
 )
 func multiplica(fac []*big.Int) (*big.Int){
   mul := big.NewInt(1)
@@ -19,7 +20,7 @@ func divide(fac []int64, div int64) (*big.Int){
     j,i int64
     res []*big.Int
   )
-  fmt.Println(fac)
+  //fmt.Println(fac)
   if int64(len(fac)) < div {
     if len(fac) == 1 {
       return big.NewInt(fac[0])
@@ -36,9 +37,11 @@ func divide(fac []int64, div int64) (*big.Int){
     mod := int64(len(fac))%div
     r := int64(math.Floor(tam/divi))
     res = append(res,divide(fac[0:r+mod],div))
+    fmt.Println(res)
     for j,i=0,r+mod; j < div-1; j++{
         fmt.Println(fac[i:i+r])
         res = append(res,divide(fac[i:i+r],div))
+        fmt.Println(res)
         i = i+r
     }
   }
@@ -55,6 +58,7 @@ func main(){
   fmt.Scanln(&num)
   fmt.Println("Divide by: ")
   fmt.Scanln(&div)
+  ini := time.Now()
   if div == 1 || div == 0 {
     fmt.Println("Not valid, div have to > 2")
     os.Exit(0)
@@ -63,4 +67,7 @@ func main(){
     factorial = append(factorial,i)
   }
   fmt.Println("Resultado: " ,divide(factorial,div))
+  final := time.Now()
+  diff := final.Sub(ini)
+  fmt.Println("Tiempo: ", diff.Nanoseconds())
 }
